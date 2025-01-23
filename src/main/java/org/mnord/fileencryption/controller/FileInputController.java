@@ -21,6 +21,8 @@ public class FileInputController {
   private TextField passwordField;
   @FXML
   private Button encryptButton;
+  @FXML
+  private Button decryptButton;
 
   private File selectedFile;
 
@@ -46,6 +48,20 @@ public class FileInputController {
         Encryption encryption = new Encryption();
         encryption.encrypt(selectedFile, secretKey);
         fileLabel.setText("File encrypted successfully");
+      } else {
+        fileLabel.setText("Please select a file and enter password");
+      }
+    });
+
+    decryptButton.setOnAction(event -> {
+      if (selectedFile != null && !passwordField.getText().isEmpty()) {
+        PasswordHash passwordHash = new PasswordHash();
+        passwordHash.stringToHash(passwordField.getText());
+        SecretKey secretKey = passwordHash.getKey();
+
+        Encryption decryption = new Encryption();
+        decryption.decrypt(selectedFile, secretKey);
+        fileLabel.setText("File decrypted successfully!");
       } else {
         fileLabel.setText("Please select a file and enter password");
       }
