@@ -1,0 +1,29 @@
+#mainVbox {
+    -fx-background-color: #393939;
+
+}
+
+#decryptButton:hover, #encryptButton:hover, #fileButton:hover {
+    -fx-background-color: #505050;
+}
+
+#decryptButton:pressed, #encryptButton:pressed, #fileButton:pressed {
+    -fx-background-color: #404040;
+}
+
+#fileButton, #decryptButton, #encryptButton {
+    -fx-background-color: #626262;
+    -fx-text-fill: #D9D9D9;
+    -fx-background-radius: 10;
+}
+
+#passwordField {
+    -fx-text-fill: #393939;
+    -fx-prompt-text-fill: #393939;
+    -fx-background-color: red;
+    -fx-background-radius: 10;
+}
+
+#fileLabel {
+    -fx-text-fill: #D9D9D9;
+}
