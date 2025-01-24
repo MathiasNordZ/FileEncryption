@@ -12,7 +12,7 @@ public class FileInput extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/mnord/fileencryption/fileinput-view.fxml")));
-    Scene scene = new Scene(root, 1440, 1024);
+    Scene scene = new Scene(root, 1920, 1080);
     scene.getStylesheets().add("/org/mnord/fileencryption/style.css");
     stage.setTitle("File Input");
     stage.setScene(scene);
