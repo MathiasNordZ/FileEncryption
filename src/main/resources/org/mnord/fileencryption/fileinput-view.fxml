@@ -7,16 +7,20 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="735.0" prefWidth="972.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mnord.fileencryption.controller.FileInputController">
+<VBox alignment="CENTER" prefHeight="735.0" prefWidth="972.0" spacing="10.0" style="-fx-background-color: #393939;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mnord.fileencryption.controller.FileInputController">
     <Label fx:id="fileLabel" text="No file selected" />
-    <Button fx:id="fileButton" alignment="CENTER" contentDisplay="CENTER" text="Select File" />
-    <TextField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="Enter password for encryption/decryption">
+    <Button fx:id="fileButton" alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #626262; -fx-border-radius: 100px;" text="Select File" textFill="#d9d9d9" />
+    <TextField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="Enter password for encryption/decryption" style="-fx-background-color: #D9D9D9;" styleClass="-f--">
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></TextField>
    <FlowPane alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
       <children>
-         <Button fx:id="decryptButton" mnemonicParsing="false" text="Decrypt">
+          <Button fx:id="encryptButton" alignment="TOP_LEFT" contentDisplay="CENTER" style="-fx-background-color: #626262;" text="Encrypt" textFill="#d9d9d9">
+            <FlowPane.margin>
+               <Insets right="5.0" />
+            </FlowPane.margin></Button>
+         <Button fx:id="decryptButton" mnemonicParsing="false" style="-fx-background-color: #626262;" text="Decrypt" textFill="#d9d9d9">
             <opaqueInsets>
                <Insets />
             </opaqueInsets>
@@ -24,10 +28,6 @@
                <Insets right="10.0" />
             </FlowPane.margin>
          </Button>
-          <Button fx:id="encryptButton" alignment="TOP_LEFT" contentDisplay="CENTER" text="Encrypt">
-            <FlowPane.margin>
-               <Insets right="5.0" />
-            </FlowPane.margin></Button>
       </children>
    </FlowPane>
 </VBox>
