@@ -6,7 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.mnord.fileencryption.logic.Encryption;
+import org.mnord.fileencryption.logic.CryptoException;
+import org.mnord.fileencryption.logic.FileEncryption;
 import org.mnord.fileencryption.logic.PasswordHash;
 
 import javax.crypto.SecretKey;
@@ -45,9 +46,13 @@ public class FileInputController {
         passwordHash.stringToHash(passwordField.getText());
         SecretKey secretKey = passwordHash.getKey();
 
-        Encryption encryption = new Encryption();
-        encryption.encrypt(selectedFile, secretKey);
-        fileLabel.setText("File encrypted successfully");
+        FileEncryption encryption = new FileEncryption();
+        try {
+          encryption.encrypt(selectedFile, secretKey);
+          fileLabel.setText("File encrypted successfully");
+        } catch (CryptoException e) {
+          fileLabel.setText("Error in encryption!");
+        }
       } else {
         fileLabel.setText("Please select a file and enter password");
       }
@@ -59,13 +64,16 @@ public class FileInputController {
         passwordHash.stringToHash(passwordField.getText());
         SecretKey secretKey = passwordHash.getKey();
 
-        Encryption decryption = new Encryption();
-        decryption.decrypt(selectedFile, secretKey);
-        fileLabel.setText("File decrypted successfully!");
+        FileEncryption decryption = new FileEncryption();
+        try {
+          decryption.decrypt(selectedFile, secretKey, new File("output"));
+          fileLabel.setText("File decrypted successfully!");
+        } catch (CryptoException e) {
+          fileLabel.setText("Error in decryption!");
+        }
       } else {
         fileLabel.setText("Please select a file and enter password");
       }
     });
   }
-
 }
