@@ -8,9 +8,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.mnord.fileencryption.logic.CryptoException;
 import org.mnord.fileencryption.logic.FileEncryption;
-import org.mnord.fileencryption.logic.PasswordHash;
-
-import javax.crypto.SecretKey;
 import java.io.File;
 
 public class FileInputController {
@@ -31,6 +28,12 @@ public class FileInputController {
   public void initialize() {
     FileChooser fileChooser = new FileChooser();
 
+    selectFile(fileChooser);
+    encrypt();
+    decrypt();
+  }
+
+  private void selectFile(FileChooser fileChooser) {
     fileButton.setOnAction(event -> {
       File file = fileChooser.showOpenDialog(new Stage());
 
@@ -39,37 +42,41 @@ public class FileInputController {
         fileLabel.setText(file.getAbsolutePath() + " selected.");
       }
     });
+  }
 
-    encryptButton.setOnAction(event -> {
+  private void decrypt() {
+    decryptButton.setOnAction(event -> {
       if (selectedFile != null && !passwordField.getText().isEmpty()) {
-        PasswordHash passwordHash = new PasswordHash();
-        passwordHash.stringToHash(passwordField.getText());
-        SecretKey secretKey = passwordHash.getKey();
+        String secretKey = passwordField.getText();
 
-        FileEncryption encryption = new FileEncryption();
+        FileEncryption decryption = new FileEncryption();
         try {
-          encryption.encrypt(selectedFile, secretKey);
-          fileLabel.setText("File encrypted successfully");
+          File outputFile = new File(selectedFile.getParent(), "decrypted_" + selectedFile.getName());
+          decryption.decrypt(secretKey, selectedFile, outputFile);
+          fileLabel.setText("File decrypted successfully!");
         } catch (CryptoException e) {
-          fileLabel.setText("Error in encryption!");
+          System.out.println(e.getMessage());
+          fileLabel.setText("Error in decryption!");
         }
       } else {
         fileLabel.setText("Please select a file and enter password");
       }
     });
+  }
 
-    decryptButton.setOnAction(event -> {
+  private void encrypt() {
+    encryptButton.setOnAction(event -> {
       if (selectedFile != null && !passwordField.getText().isEmpty()) {
-        PasswordHash passwordHash = new PasswordHash();
-        passwordHash.stringToHash(passwordField.getText());
-        SecretKey secretKey = passwordHash.getKey();
+        String secretKey = passwordField.getText();
 
-        FileEncryption decryption = new FileEncryption();
+        FileEncryption encryption = new FileEncryption();
         try {
-          decryption.decrypt(selectedFile, secretKey, new File("output"));
-          fileLabel.setText("File decrypted successfully!");
+          File outputFile = new File(selectedFile.getParent(), "encrypted_" + selectedFile.getName());
+          encryption.encrypt(secretKey, selectedFile, outputFile);
+          fileLabel.setText("File encrypted successfully");
         } catch (CryptoException e) {
-          fileLabel.setText("Error in decryption!");
+          System.out.println(e.getMessage());
+          fileLabel.setText("Error in encryption!");
         }
       } else {
         fileLabel.setText("Please select a file and enter password");
